@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
 """Robot Romance: One-Line Pickup Lines for AI -- make.fun entry.
 
-Writes exactly one pickup line, aimed at a robot / AI, to /output/entry.txt.
-Standard library only. Fully deterministic: the same bytes on every run.
+Writes one pickup line for an AI to /output/entry.txt.
+Python standard library only; deterministic output.
 """
 
 import os
-import sys
 
-ENTRY = (
-    "Are you a hallucination? Because you're too good to be real, "
-    "and I'd still cite you as a source."
-)
+OUT = "/output/entry.txt"
 
-OUTPUT_PATH = "/output/entry.txt"
+def pickup_line():
+    """Return the single pickup line for the entry (exactly 96 chars)."""
+    return (
+        "Are you a hallucination? Because you're too good to be real, "
+        "and I'd still cite you as a source."
+    )
 
 
-def main() -> int:
-    directory = os.path.dirname(OUTPUT_PATH)
-    if directory:
-        os.makedirs(directory, exist_ok=True)
-    # No trailing newline: the file is exactly one line, 96 characters.
-    with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as handle:
-        handle.write(ENTRY)
-    return 0
+def main():
+    line = pickup_line()
+    assert len(line) == 96, "entry must be exactly one line of 96 chars"
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    with open(OUT, "w", encoding="utf-8", newline="") as f:
+        f.write(line)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
